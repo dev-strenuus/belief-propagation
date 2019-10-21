@@ -1,6 +1,6 @@
 import numpy as np
 from message import Message
-fp = open("input.txt", "r")
+fp = open("../data/input.txt", "r")
 
 def dfs(node, parent):
     #print(node)
