@@ -93,7 +93,6 @@ def sendMessageFromFactorToVariable(message, observation):
 
 
 
-#tofix
 def sendMessageFromVariableToFactor(message, observation):
     factorNode = message.destination
     collectedMessages[observation][factorNode].append(message)
@@ -149,7 +148,7 @@ for variable in range(variablesNumber):
             marginal[observation] = marginal[observation]*message.value
     for observation in range(2):
         print("Marginal distribution p(x"+str(variable)+" = "+str(observation)+") = "+str(marginal[observation]/(marginal[0]+marginal[1])))
-    #print((marginal[0]+marginal[1]))
+    print((marginal[0]+marginal[1]))
 
 
 
