@@ -13,8 +13,13 @@ def dfs(node, parent):
         leaves.append(node)
 
 
-def getDistribution(nodeId):
-    return distributions[nodeId-variablesNumber]
+def getDistribution(nodeId, states):
+    index = 0
+    cont = 1
+    for state in states:
+        index = index + cont*int(state)
+        cont = cont * 2
+    return distributions[nodeId-variablesNumber][index]
 
 def computeProductOfMessagesForVariableNode(observation, node):
     value = 1
@@ -36,7 +41,7 @@ def computeProductOfMessagesForFactorNode(node, states, destinationNode):
 
 def computeFactorToVariableMessageSummation(pos, observation, factorNode, destinationNode, states):
     if pos == len(graph[factorNode]):
-        return getDistribution(factorNode)[tuple(states)]*computeProductOfMessagesForFactorNode(factorNode, states, destinationNode)
+        return getDistribution(factorNode, states)*computeProductOfMessagesForFactorNode(factorNode, states, destinationNode)
 
     if graph[factorNode][pos] == destinationNode:
         states.append(observation)
@@ -125,8 +130,7 @@ distributions = []
 for i in range(factorsNumber):
     nodeId = variablesNumber + i
     adjacentNodes = list(map(int, fp.readline().split(" ")))
-    shape = tuple([2]*len(adjacentNodes))
-    distributions.append(np.array(list(map(float, fp.readline().split(" ")))).reshape(shape))
+    distributions.append(np.array(list(map(float, fp.readline().split(" ")))))
     for node in adjacentNodes:
         graph[nodeId].append(node)
         graph[node].append(nodeId)
@@ -138,8 +142,8 @@ for leaf in leaves:
         sendMessageFromVariableToFactor(Message(leaf, graph[leaf][0], 1), 0)
         sendMessageFromVariableToFactor(Message(leaf, graph[leaf][0], 1), 1)
     else:
-        sendMessageFromFactorToVariable(Message(leaf, graph[leaf][0], getDistribution(leaf)[0]), 0)
-        sendMessageFromFactorToVariable(Message(leaf, graph[leaf][0], getDistribution(leaf)[1]), 1)
+        sendMessageFromFactorToVariable(Message(leaf, graph[leaf][0], getDistribution(leaf, "0")), 0)
+        sendMessageFromFactorToVariable(Message(leaf, graph[leaf][0], getDistribution(leaf, "1")), 1)
 
 for variable in range(variablesNumber):
     marginal = [1,1]
@@ -148,7 +152,7 @@ for variable in range(variablesNumber):
             marginal[observation] = marginal[observation]*message.value
     for observation in range(2):
         print("Marginal distribution p(x"+str(variable)+" = "+str(observation)+") = "+str(marginal[observation]/(marginal[0]+marginal[1])))
-    print((marginal[0]+marginal[1]))
+    print("Normalization costant: "+str((marginal[0]+marginal[1])))
 
 
 
