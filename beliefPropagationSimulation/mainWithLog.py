@@ -1,6 +1,8 @@
 import numpy as np
 from message import Message
-fp = open("../data/input.txt", "r")
+fp = open("../data/input0.txt", "r")
+
+eps = 0.000000000000000000001
 
 def dfs(node, parent):
     #print(node)
@@ -74,7 +76,7 @@ def computeFactorToVariableMessageSummation(pos, observation, factorNode, destin
 
 def computeFactorToVariableMessage(observation, factorNode, destinationNode):
     res = computeFactorToVariableMessageSummation(0, observation, factorNode, destinationNode, [])
-    return np.log(res[0]) + res[1]
+    return np.log(res[0]+eps) + res[1]
 
 
 def findDestinationNode(observation, node):
@@ -154,8 +156,8 @@ for leaf in leaves:
         sendMessageFromVariableToFactor(Message(leaf, graph[leaf][0], 0), 0)
         sendMessageFromVariableToFactor(Message(leaf, graph[leaf][0], 0), 1)
     else:
-        sendMessageFromFactorToVariable(Message(leaf, graph[leaf][0], np.log(getDistribution(leaf, "0"))), 0)
-        sendMessageFromFactorToVariable(Message(leaf, graph[leaf][0], np.log(getDistribution(leaf, "1"))), 1)
+        sendMessageFromFactorToVariable(Message(leaf, graph[leaf][0], np.log(getDistribution(leaf, "0"))+eps), 0)
+        sendMessageFromFactorToVariable(Message(leaf, graph[leaf][0], np.log(getDistribution(leaf, "1"))+eps), 1)
 
 for variable in range(variablesNumber):
     marginal = [0,0]

@@ -6,12 +6,12 @@ def generateRandomDistribution(length):
     v = [0]*length
     for i in range(length):
         v[i] = random.randint(1, 3)
-    """    sum = sum + v[i]
+        sum = sum + v[i]
     for i in range(length):
-        v[i] = v[i] / sum"""
+        v[i] = v[i] / sum
     return v
 
-n = 100000
+n = 1000
 test = 0
 
 q = []
