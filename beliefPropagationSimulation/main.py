@@ -1,6 +1,9 @@
 import numpy as np
 from message import Message
-fp = open("../data/input.txt", "r")
+import sys
+sys.setrecursionlimit(10000)
+
+fp = open("../data/input0.txt", "r")
 
 def dfs(node, parent):
     #print(node)

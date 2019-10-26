@@ -1,17 +1,19 @@
 import numpy as np
 import random
+import sys
+sys.setrecursionlimit(10000)
 
 def generateRandomDistribution(length):
     sum = 0
     v = [0]*length
     for i in range(length):
-        v[i] = random.randint(1, 3)
+        v[i] = random.randint(1, 500)
         sum = sum + v[i]
     for i in range(length):
         v[i] = v[i] / sum
     return v
 
-n = 1000
+n = 500000
 test = 0
 
 q = []
@@ -20,7 +22,7 @@ g = [ [] for i in range(n)]
 cont = 1
 while(len(q) > 0):
     curr = q.pop(0)
-    children = min(np.random.randint(1,5), n-cont)
+    children = min(np.random.randint(1,10), n-cont)
     for i in range(children):
         g[curr].append(cont)
         q.append(cont)
