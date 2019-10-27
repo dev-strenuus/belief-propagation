@@ -3,7 +3,7 @@ from message import Message
 import sys
 sys.setrecursionlimit(10000)
 
-fp = open("../data/input0.txt", "r")
+fp = open("../data/big2.txt", "r")
 
 eps = 0.000000000000000000001
 

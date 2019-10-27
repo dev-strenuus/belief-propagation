@@ -3,6 +3,12 @@ import random
 import sys
 sys.setrecursionlimit(10000)
 
+
+minNumberOfChildren = 5
+maxNumberOfChildren = 6
+n = 1000000
+test = 0
+
 def generateRandomDistribution(length):
     sum = 0
     v = [0]*length
@@ -13,16 +19,13 @@ def generateRandomDistribution(length):
         v[i] = v[i] / sum
     return v
 
-n = 500000
-test = 0
-
 q = []
 q.append(0)
 g = [ [] for i in range(n)]
 cont = 1
 while(len(q) > 0):
     curr = q.pop(0)
-    children = min(np.random.randint(1,10), n-cont)
+    children = min(np.random.randint(minNumberOfChildren,maxNumberOfChildren), n-cont)
     for i in range(children):
         g[curr].append(cont)
         q.append(cont)
